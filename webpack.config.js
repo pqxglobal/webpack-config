@@ -1,3 +1,5 @@
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 const mode = process.env.NODE_ENV || "development";
 
 module.exports = {
@@ -14,12 +16,24 @@ module.exports = {
                         presets: ['@babel/preset-env']
                     }
                 }
+            },
+            {
+                test: /\.(s[ac]|c)ss$/i,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    "css-loader",
+                    "postcss-loader",
+                    "sass-loader"
+                ],
             }
         ]
     },
 
+    plugins: [new MiniCssExtractPlugin()],
+
     devtool: "source-map",
     devServer: {
         static: "./dist",
+        hot: true,
     },
 };
